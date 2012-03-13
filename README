@@ -1,0 +1,39 @@
+=====================================
+
+           Login a Client/Server
+		      and MySQL C API
+			  application.
+			  
+		Borys H.N.
+		3.13.12 
+		
+=====================================
+	
+Pre-Requisites!
+1) MySQL Server installed and running
+     !use supplied SQL to build Login.users DB and table
+2) Visual C++ and or equivelant libraries to handle winsock
+   exchanges
+   
+Instructions...
+*once you've already done pre-requisites
+1) Create a solution with 2 projects, Client and Server
+2) Set Client dependency to Server, and have them both startup at the same time.
+3) Add code and compile!
+	I compiled for 32bit Windows Vista. Your structures may change slightly
+	a different operating system.
+4) Run Server!
+	1. give it port number (same one to be used by Client!)
+	2. start server (s), make it wait for a connection(w)
+5) Run Client!
+	1. give it the server name (i.e. 127.0.0.1, localhost, 192.168.0.x)
+	2. give it the port which the server listens on...
+	3. If everything went succesfuly you should be able to press (c) and connect
+		to the host. The host will assign the connection its own port number.
+	4. press (m) to bring up the send message menu, and get that dialogue going! 
+	
+For the future...
+(!)Server throws AV excpetion...
+(!)Encrypted logins for users in database (unencrypt by server) 
+(!)Root auth only for server
+(!)encryt user name and password for MySQL DB (hard coded in UsersManager.cpp)

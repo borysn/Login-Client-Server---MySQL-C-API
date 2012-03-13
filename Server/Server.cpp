@@ -3,7 +3,7 @@
 //con/destructors
 Server::Server(int portNum) : REQ_WINSOCK_VER(2), 
 							  PORT(portNum), 
-							  SERVER_NAME("sleepless.no-ip.org") {
+							  SERVER_NAME("localhost") {
 	UsersMan = new UsersManager();
 	started = false; 
 	menuLevel = 0; 

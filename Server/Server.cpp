@@ -482,7 +482,7 @@ int Server::processMessage(char *pMessage) {
 			cout << "\tEncrypt message code recieved...\n";
 			if ((sendMessage("send message to encrypt...\n", false)) == false)
 				throw Exception("\nError sending request...\n");
-			
+
 			//get message
 			char *message = getMessage();
 
@@ -560,7 +560,7 @@ int Server::processMessage(char *pMessage) {
 			if ((strcmp(pwd, "\0") == 0))
 				throw Exception("\nError getting password...\n");
 			cout << "\tPassword recieved: " << pwd << endl;
-			
+
 			//prompt for other 
 			if ((sendMessage("send other info...\n", false)) == false)
 				throw Exception("\nError sending request...\n");

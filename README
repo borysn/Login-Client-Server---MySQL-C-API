@@ -20,6 +20,9 @@ Instructions...
 1) Create a solution with 2 projects, Client and Server
 2) Set Client dependency to Server, and have them both startup at the same time.
 3) Add code and compile!
+	*
+	**REMBER TO INCLUDE YOUR LOGIN INFO FOR THE MYSQL DB IN UsersManager.cpp
+	*
 	I compiled for 32bit Windows Vista. Your structures may change slightly
 	a different operating system.
 4) Run Server!

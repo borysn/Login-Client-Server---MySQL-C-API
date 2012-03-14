@@ -98,7 +98,7 @@ void Server::SetServerSockAddr() {
 	//set to TCP family, set address, and port number
 	sockAddr.sin_family = AF_INET;
 	sockAddr.sin_port = PORT; //DEFAULT_PORT?
-	sockAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+	sockAddr.sin_addr.S_un.S_addr = FindHostIP();
 }
 
 //setup
@@ -482,12 +482,11 @@ int Server::processMessage(char *pMessage) {
 			cout << "\tEncrypt message code recieved...\n";
 			if ((sendMessage("send message to encrypt...\n", false)) == false)
 				throw Exception("\nError sending request...\n");
-
+			
 			//get message
 			char *message = getMessage();
 
 			if((sendMessage(message, true)) == false) {
-				delete [] message;
 				throw Exception("\nFailed to send encrypted message...\n");
 			}
 
@@ -528,6 +527,19 @@ int Server::processMessage(char *pMessage) {
 
 			delete [] message;
 
+			UserEntry *pKey = new UserEntry(new UserKey(name, pwd));
+
+			if (UsersMan->login(pKey)) {
+				if ((sendMessage("login success...\n", false)) == false) {
+					throw Exception("\nError sending request...\n");
+				} 
+			} else {
+				if ((sendMessage("login failed...\n", false)) == false)
+					throw Exception("\nError sending request...\n");
+			}
+
+			delete pKey;
+
 			return 1;
 		}
 		//if prompted for registration
@@ -560,7 +572,7 @@ int Server::processMessage(char *pMessage) {
 			if ((strcmp(pwd, "\0") == 0))
 				throw Exception("\nError getting password...\n");
 			cout << "\tPassword recieved: " << pwd << endl;
-
+			
 			//prompt for other 
 			if ((sendMessage("send other info...\n", false)) == false)
 				throw Exception("\nError sending request...\n");

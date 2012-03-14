@@ -25,7 +25,7 @@ bool UsersManager::userExists(const char *pName) {
 
 	//see if user is in database query, more cat games
 	strcpy_s(query, SIZE*2, "SELECT * FROM ");
-	strcat_s(query, SIZE*2, info->tables[0]);
+	strcat_s(query, SIZE*2, info->tables[0]); 
 	strcat_s(query, SIZE*2, " WHERE username = '"); 
 	strcat_s(query, SIZE*2, pName);
 	strcat_s(query, SIZE*2, "'");
@@ -56,6 +56,37 @@ bool UsersManager::userExists(const char *pName) {
 
 bool UsersManager::login(UserEntry *pKey) {
 	//-!-return false if login failed  
+	char *query = new char[SIZE*2];
+
+	//see if user && pass is in database query, more cat games
+	strcpy_s(query, SIZE*2, "SELECT * FROM ");
+	strcat_s(query, SIZE*2, info->tables[0]); 
+	strcat_s(query, SIZE*2, " WHERE ");
+	strcat_s(query, SIZE*2, pKey->getKeyQuery());
+	cout << "\n-----------\nquery = " << query << "\n-----------\n";
+
+	cout << "\n  [Logging user in...]\n";
+	doQuery(query);
+	try { 
+		char **tmp; 
+		//must deallocate tmp still...
+		if ((tmp = getNextRow()) != NULL) { 
+			if ((strcmp(tmp[0], pKey->getKey().getUserName()) == 0) && 
+				(strcmp(tmp[1], pKey->getKey().getUserPwd()) == 0)) {
+				cout << "\tLogin success!\n\n\tUser: " << tmp[0]; // << endl; *passing \n still
+				cout << "\n\tPass: " << tmp[1] << endl;
+			} else  
+				throw Exception("\tError, no match found...");
+		} else
+			throw Exception("\tLogin failed.\n");
+	} catch (Exception &e) {
+		cout << e.hmm();  
+		delete [] query;
+		return false;
+	}
+
+	delete [] query;
+
 	return true;
 }
 

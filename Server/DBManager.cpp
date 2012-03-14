@@ -7,9 +7,9 @@ DBManager::DBManager() {
 	strcpy_s(info->host, SIZE, "\0");
 	strcpy_s(info->user, SIZE, "\0"); 
 	strcpy_s(info->pass, SIZE, "\0"); 
-	strcpy_s(info->db, SIZE, "\0");
+	strcpy_s(info->db, SIZE, "\0"); 
 	strcpy_s(info->tables[1], SIZE, "\0"); 
-}
+} 
 
 DBManager::DBManager(MysqlConnectInfo *pDBInfo) {
 	setConnectionInfo(pDBInfo);
@@ -74,11 +74,11 @@ bool DBManager::setupConnection() {
 
 void DBManager::setConnectionInfo(MysqlConnectInfo *pdbInfo) {
 	info = pdbInfo;
-}
+} 
 
 void DBManager::doQuery(char *pQuery) {
 	mysql_free_result(m_pResult);
-	if (mysql_query(m_pConn, pQuery)) {
+	if (mysql_query(m_pConn, pQuery)) { 
 		m_pResult = NULL;	
 		exit(1); 
 	}

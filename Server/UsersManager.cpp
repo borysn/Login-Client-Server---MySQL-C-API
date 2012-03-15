@@ -3,8 +3,8 @@
 //con/destructors
 UsersManager::UsersManager() : DBManager() {
 	strcpy_s(info->host, SIZE, "localhost");
-	strcpy_s(info->user, SIZE, "root");
-	strcpy_s(info->pass, SIZE, "bn091145");
+	strcpy_s(info->user, SIZE, "");
+	strcpy_s(info->pass, SIZE, "");
 	strcpy_s(info->db, SIZE, "login");
 	strcpy_s(info->tables[0], SIZE, "users"); 
 

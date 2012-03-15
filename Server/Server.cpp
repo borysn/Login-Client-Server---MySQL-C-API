@@ -234,7 +234,7 @@ bool Server::sendMessage(char *pMessage, bool encrypt) {
 		}
 	} catch (Exception &e) {
 		cout << e.hmm();
-		return false;
+		return false; 
 	}
 }
 
@@ -604,6 +604,65 @@ int Server::processMessage(char *pMessage) {
 
 			delete entry;
 
+			return 1;
+		}
+
+		//if deleting a user
+		else if (strcmp(pMessage, "v") == 0) {
+			cout << "\tdelete user message code recieved...\n";
+
+			//prompt for user name
+			if ((sendMessage("send username...\n", false)) == false)
+				throw Exception("\nError sending request...\n");
+
+			//get name
+			char *message = getMessage();
+			strcpy_s(name, SIZE, message);
+
+			//verify
+			if ((strcmp(name, "\0") == 0))
+				throw Exception("\nError getting name...\n");
+			cout << "\tName recieved: " << name << endl;
+
+			//prompt for password
+			if ((sendMessage("send password...\n", false)) == false)
+				throw Exception("\nError sending request...\n");
+
+			//get password
+			delete [] message; 
+			message = getMessage();
+			strcpy_s(pwd, SIZE, message);
+
+			//verify
+			if ((strcmp(pwd, "\0") == 0))
+				throw Exception("\nError getting password...\n");
+			cout << "\tPassword recieved: " << pwd << endl;
+
+			delete [] message;
+
+			UserEntry *pKey = new UserEntry(new UserKey(name, pwd));
+
+			if (UsersMan->login(pKey)) {
+				if ((sendMessage("login success...\n\tdeleting user...\n", false)) == false) {
+					throw Exception("\nError sending request...\n");
+				} else {
+					if (UsersMan->removeUser(pKey)) { 
+						if ((sendMessage("user removed...\n", false)) == false) 
+							throw Exception("\nError sending request...\n"); 
+					} else {
+						if ((sendMessage("user removal failed...\n", false)) == false) 
+							throw Exception("\nError sending request...\n");
+					}
+				}
+			} else {
+				//if failes, client is still expecting 2 messages back 
+				if ((sendMessage("login failed,\n\tplease try again...\n", false)) == false)
+					throw Exception("\nError sending request...\n");
+				if ((sendMessage("user removal failed...\n", false)) == false) 
+					throw Exception("\nError sending request...\n");
+			}
+
+			delete pKey;
 			return 1;
 		}
 		// for everything else disconnect

@@ -13,7 +13,7 @@ using namespace std;
 
 typedef unsigned long IPNumber;
 
-class UsersManager;
+class UsersManager; 
 
 class Server {
 private:

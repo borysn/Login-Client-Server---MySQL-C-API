@@ -227,7 +227,8 @@ void Client::printMenu() {
 		cout << "e : Begin echo message.\n";
 		cout << "f : Find a user.\n";
 		cout << "l : Prompt for login.\n";
-		cout << "r : Prompt to register a user.\n"; 
+		cout << "r : Prompt to register a user.\n";
+		cout << "v : Delete a user.\n"; 
 		cout << "-1: Send disconnect.\n";
 		cout << "---------------------\n";
 		break;
@@ -465,6 +466,34 @@ bool Client::processResponse(char *pResponse) {
 			
 			newline = NULL;
 			delete newline;
+
+			menuLevel = 1;
+		}
+		//if deleteing a user
+		else if (strcmp(pResponse, "v") == 0) { 
+			char name[SIZE] = "\0";
+			char pwd[SIZE] = "\0";
+			
+			//get and send user name
+			getServerResponse(); 
+			cout << "Name:> ";
+			cin >> name;
+			if (send(mSocket, name, SIZE, 0) == SOCKET_ERROR)
+				throw Exception("\nFailed to send user name...\n");
+
+			//get and send password
+			getServerResponse();
+			cout << "Password:> ";
+			cin >> pwd;
+			if (send(mSocket, pwd, SIZE, 0) == SOCKET_ERROR)
+				throw Exception("\nFailed to send password...\n");
+
+			//login must succeed in order to remove user
+			//get success or not
+			getServerResponse();
+
+			//get removal seuccess or not
+			getServerResponse(); 
 
 			menuLevel = 1;
 		}

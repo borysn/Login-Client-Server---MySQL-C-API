@@ -3,8 +3,8 @@
 //con/destructors
 UsersManager::UsersManager() : DBManager() {
 	strcpy_s(info->host, SIZE, "localhost");
-	strcpy_s(info->user, SIZE, "");
-	strcpy_s(info->pass, SIZE, "");
+	strcpy_s(info->user, SIZE, "root");
+	strcpy_s(info->pass, SIZE, "bn091145");
 	strcpy_s(info->db, SIZE, "login");
 	strcpy_s(info->tables[0], SIZE, "users"); 
 
@@ -34,11 +34,11 @@ bool UsersManager::userExists(const char *pName) {
 
 	doQuery(query);
 
-	try { 
+	try {
 		char **tmp; 
 		if ((tmp = getNextRow()) != NULL) { 
 			cout << "\ntmp[0] = " << tmp[0] << endl;
-			if (strcmp(tmp[0], pName) == 0) {
+			if (strcmp(tmp[0], pName) == 0) { 
 				cout << "\tMatch found!\n\tUser: " << tmp[0] << endl; 
 			} else
 				throw Exception("\tError, no match found...");
@@ -67,10 +67,10 @@ bool UsersManager::login(UserEntry *pKey) {
 
 	cout << "\n  [Logging user in...]\n";
 	doQuery(query);
-	try { 
+	try {
 		char **tmp; 
 		//must deallocate tmp still...
-		if ((tmp = getNextRow()) != NULL) { 
+		if ((tmp = getNextRow()) != NULL) {
 			if ((strcmp(tmp[0], pKey->getKey().getUserName()) == 0) && 
 				(strcmp(tmp[1], pKey->getKey().getUserPwd()) == 0)) {
 				cout << "\tLogin success!\n\n\tUser: " << tmp[0]; // << endl; *passing \n still
@@ -129,8 +129,34 @@ bool UsersManager::editExistingUser(UserEntry *pOldUser, UserEntry *pNewUser) {
 }
 
 bool UsersManager::removeUser(UserEntry *pUser) {
-	//-!-return false if user does not exist 
-	return true;
+	//-!-return false if user does not exist
+
+	//setup query
+	char *query = new char[SIZE*2];
+	strcpy_s(query, SIZE*2, "DELETE FROM ");
+	strcat_s(query, SIZE*2, info->tables[0]);
+	strcat_s(query, SIZE*2, " WHERE");
+	strcat_s(query, SIZE*2, pUser->getKeyQuery()); 
+	cout << "\n-----------\nquery = " << query << "\n-----------\n";
+
+ 	try {
+		cout << "\n\tRemoving user...\n";
+		doQuery(query); 
+
+		if (!userExists(pUser->getKey().getUserName())) { 
+			cout << "\nUser removal success!\n\n\tUser: " << pUser->getKey().getUserName(); // << endl; *passing \n still
+			cout << "\n\tPass: " << pUser->getKey().getUserPwd() << endl;
+		} else
+			throw Exception("\tUser removal failed.\n");
+	} catch (Exception &e) {
+		cout << e.hmm();
+		delete [] query;
+		return false;
+	}
+
+	delete [] query; 
+
+	return true; 
 }
 
 

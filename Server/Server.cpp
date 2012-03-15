@@ -257,6 +257,9 @@ int Server::getClientRequest() {
 		}
 	} catch (Exception &e) {
 		cout << e.hmm();
+		return -1; //i.e. client drops connection mid dialogue. this handles that
+				   //otherwise i get an infinite loop for recieing data when client
+		           //drops out mid dialog
 	}
 	return retval;
 }

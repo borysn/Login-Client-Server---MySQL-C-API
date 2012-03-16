@@ -448,6 +448,11 @@ int Server::processMessage(char *pMessage) {
 
 			return 1;
 		}
+		//if logging out
+		else if (strcmp(pMessage, "o") == 0) {
+			cout << "\tUser logging out...\n";
+			return 1; 
+		}
 		//if find a user
 		else if (strcmp(pMessage, "f") == 0) {
 			//send response

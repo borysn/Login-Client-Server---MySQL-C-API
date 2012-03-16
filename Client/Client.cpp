@@ -78,9 +78,10 @@ bool Client::InitWinSock() {
 
 bool Client::CleanUpWinSock() {	
 	//call this at the end of the application
+	loggedIn = false; //here?
 	try {
 		//closeup and cleanup
-		cout <<	"\n  [Closing socket...]";
+		cout <<	"\n  [Closing socket...]"; 
 		if (mSocket != INVALID_SOCKET) {
 			closesocket(mSocket);
 			cout << "\n\tsuccess.\n";
@@ -253,7 +254,6 @@ void Client::printMenu() {
 	case 0:
 		cout << "\n====Client Menu 0====\n";
 		cout << "c : Connect to host.\n";
-		cout << "d : Disconnect from host.\n";
 		cout << "x : exit application.\n";
 		cout << "---------------------\n";
 		break;

@@ -307,8 +307,7 @@ void Server::printServerMenu() {
 	default:
 	case 0 : 
 		cout << "\n====Server Menu 0====\n";
-		cout << "s : Start the server.\n";
-		cout << "t : Stop the server.\n";
+		cout << "s : Start the server.\n"; 
 		cout << "x : Exit application.\n";
 		cout << "---------------------\n";
 		break; 

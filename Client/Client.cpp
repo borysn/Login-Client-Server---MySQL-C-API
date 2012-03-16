@@ -359,7 +359,7 @@ bool Client::processResponse(char *pResponse) {
 		if(strcmp(pResponse, "-1") == 0) {
 			cout << "\n  Disconnecting...\n";
 			getServerResponse();
-			menuLevel = -1;
+			menuLevel = 0;
 			if(closeConnection() == false)
 				throw Exception("\nError...\n");
 		}

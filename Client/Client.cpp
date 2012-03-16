@@ -432,6 +432,7 @@ bool Client::processResponse(char *pResponse) {
 
 		//if logging out 
 		else if ((strcmp(pResponse, "o") == 0) && loggedIn) {
+			cout << "\n  Logging user out...\n";
 			loggedIn = false;
 			menuLevel = 1;
 		}

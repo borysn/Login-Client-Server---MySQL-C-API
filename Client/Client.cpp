@@ -223,6 +223,9 @@ const char * Client::getServerResponse() {
 void Client::printMenu() {
 	switch (menuLevel) {
 	case 2:
+		//can't back out of this menu right now...
+		//is that a problem? seems like it should be definitive
+		//to send message after pressing m
 		if (loggedIn) {
 			cout << "\n====Logged In user menu====\n";
 			cout << "k : Begin message encryption.\n";

@@ -17,6 +17,7 @@ typedef unsigned long IPNumber;
 class Client {
 private:
 	bool connected;
+	bool loggedIn;
 	int menuLevel;
 	const int REQ_WINSOCK_VER;
 	const int SERVER_PORT;
@@ -39,7 +40,7 @@ private:
 
 	//message management
 	bool Client::sendMessage(char *pMessage, bool bMenu);
-	bool Client::getServerResponse();
+	const char *Client::getServerResponse();
 	bool Client::processResponse(char *pResponse);
 
 	//menu and stuff

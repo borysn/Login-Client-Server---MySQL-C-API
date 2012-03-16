@@ -1,7 +1,7 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-class Exception {
+class Exception { 
 private:
 	const char *m_pMessage;
 public: 

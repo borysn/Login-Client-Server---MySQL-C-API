@@ -124,7 +124,24 @@ bool UsersManager::addNewUser(UserEntry *pEntry) {
 }
 
 bool UsersManager::editExistingUser(UserEntry *pOldUser, UserEntry *pNewUser) {
-	//-!-return false if pOldEntry == pNewEntry i.e. edit failed  
+	//-!-return false if pOldEntry == pNewEntry i.e. edit failed 
+	char *query = new char[SIZE];
+	cout << "\n-----------\nquery = " << query << "\n-----------\n";
+
+	try {
+		cout << "\n\tediting user...\n";
+		if (userExists(pOldUser->getKey().getUserName())) {
+			//start swap process
+		} else
+			throw Exception("\tEditing user failed.\n"); 
+	} catch (Exception &e) {
+		cout << e.hmm();
+		delete [] query;
+		return false;
+	}
+
+	delete [] query;
+
 	return true;
 }
 

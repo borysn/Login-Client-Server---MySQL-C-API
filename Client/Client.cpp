@@ -23,6 +23,7 @@ Client::Client(int portNum, const char *pServerName) : REQ_WINSOCK_VER(2),
 												       SERVER_PORT(portNum),
 												       SERVER_NAME(pServerName) {
 	connected = false;
+	loggedIn = false; 
 	mSocket = INVALID_SOCKET; 
 }
 
@@ -200,37 +201,45 @@ bool Client::sendMessage(char *pMessage, bool bMenu) {
 	}
 }
 
-bool Client::getServerResponse() {
+const char * Client::getServerResponse() {
+	char *tmpBuf = new char[SIZE*2]; 
 	try {
 		//all we do here is get the response from the server
 		//and print it out
-		char tmpBuf[SIZE*2]; 
 		cout << "\n  Processing server response...";
 		if ((recv(mSocket, tmpBuf, SIZE*2, 0)) == SOCKET_ERROR)
 			throw Exception("\n\tfailed.\n");
 		else {
 			cout << "\n  Server Response: \n\t" << tmpBuf;
-			return true;
 		}
 	} catch (Exception &e) {
 		cout << e.hmm();
-		return false;
 	}
+	return tmpBuf;
 }
 
 //outputs
 void Client::printMenu() {
 	switch (menuLevel) {
 	case 2:
-		cout << "\n====Send Message Menu====\n";
-		cout << "k : Begin message encryption.\n";
-		cout << "e : Begin echo message.\n";
-		cout << "f : Find a user.\n";
-		cout << "l : Prompt for login.\n";
-		cout << "r : Prompt to register a user.\n";
-		cout << "v : Delete a user.\n"; 
-		cout << "-1: Send disconnect.\n";
-		cout << "---------------------\n";
+		if (loggedIn) {
+			cout << "\n====Logged In user menu====\n";
+			cout << "2 : Go back to menu 2.\n";
+			cout << "k : Begin message encryption.\n";
+			cout << "e : Begin echo message.\n";
+			cout << "v : Delete a user.\n"; 
+			cout << "f : Find a user.\n";
+			cout << "o : logout.\n"; 
+			cout << "-1: Send disconnect.\n";
+			cout << "---------------------\n";
+		} else {
+			cout << "\n====Send Message Menu====\n";
+			cout << "1 : Go back to menu 1.\n";
+			cout << "r : Prompt to register a user.\n";
+			cout << "l : Prompt for login.\n";
+			cout << "-1: Send disconnect.\n";
+			cout << "---------------------\n";
+		}
 		break;
 	case 1:
 		cout << "\n====Client Menu 1====\n";
@@ -325,6 +334,12 @@ int Client::processMenu() {
 		return -1;
 		break;
 	//on uknown input just reprint the menu
+	case '1':
+		return 1;
+		break;
+	case '2':
+		return 2;
+		break;
 	default:
 	case '0':
 		return 0;
@@ -344,12 +359,12 @@ bool Client::processResponse(char *pResponse) {
 		if(strcmp(pResponse, "-1") == 0) {
 			cout << "\n  Disconnecting...\n";
 			getServerResponse();
-			menuLevel = 0;
+			menuLevel = -1;
 			if(closeConnection() == false)
 				throw Exception("\nError...\n");
 		}
 		//if echoing a message
-		else if (strcmp(pResponse, "e") == 0) {
+		else if ((strcmp(pResponse, "e") == 0) && loggedIn) {
 			getServerResponse();
 			cout << ":> ";
 				
@@ -370,7 +385,7 @@ bool Client::processResponse(char *pResponse) {
 			menuLevel = 1;
 		}
 		//if find user
-		else if (strcmp(pResponse, "f") == 0) {
+		else if ((strcmp(pResponse, "f") == 0) && loggedIn) {
 			char name[SIZE] = "\0";
 
 			getServerResponse();
@@ -404,10 +419,23 @@ bool Client::processResponse(char *pResponse) {
 				throw Exception("\nFailed to send password...\n");
 
 			//get success or not
-			getServerResponse();
-
+			//if success loggedIn = true
+			//cout << "\n\nlogin success...\n" << getServerResponse() << endl;
+			//pResponse = getServerResponse();
+			string response = string(getServerResponse());
+			if (response.find("success") != string::npos) {
+				loggedIn = true; 
+			} 
+			
 			menuLevel = 1;
 		}
+
+		//if logging out 
+		else if ((strcmp(pResponse, "o") == 0) && loggedIn) {
+			loggedIn = false;
+			menuLevel = 1;
+		}
+
 		//if prompt for registrations
 		else if (strcmp(pResponse, "r") == 0) {
 			char name[SIZE] = "\0";
@@ -449,7 +477,7 @@ bool Client::processResponse(char *pResponse) {
 			menuLevel = 1;
 		}
 		//if encryting a message
-		else if (strcmp(pResponse, "k") == 0) { 
+		else if ((strcmp(pResponse, "k") == 0) && loggedIn) { 
 			getServerResponse();
 			cout << ":> ";
 				
@@ -470,7 +498,7 @@ bool Client::processResponse(char *pResponse) {
 			menuLevel = 1;
 		}
 		//if deleteing a user
-		else if (strcmp(pResponse, "v") == 0) { 
+		else if ((strcmp(pResponse, "v") == 0) && loggedIn) { 
 			char name[SIZE] = "\0";
 			char pwd[SIZE] = "\0";
 			
@@ -491,6 +519,8 @@ bool Client::processResponse(char *pResponse) {
 			//login must succeed in order to remove user
 			//get success or not
 			getServerResponse();
+
+			//add y/n final decision here. 
 
 			//get removal seuccess or not
 			getServerResponse(); 

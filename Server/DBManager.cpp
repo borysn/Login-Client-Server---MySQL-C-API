@@ -1,6 +1,6 @@
 #include "DBManager.h"
 
-DBManager::DBManager() {
+DBManager::DBManager() { 
 	info = new MysqlConnectInfo(); 
 	m_pConn = mysql_init(NULL); 
 	m_pResult = NULL; 

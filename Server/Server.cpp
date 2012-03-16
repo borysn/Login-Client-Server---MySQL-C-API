@@ -1,6 +1,6 @@
 #include "Server.h"
 
-//con/destructors
+//con/destructors 
 Server::Server(int portNum) : REQ_WINSOCK_VER(2), 
 							  PORT(portNum), 
 							  SERVER_NAME("localhost") {
@@ -10,7 +10,7 @@ Server::Server(int portNum) : REQ_WINSOCK_VER(2),
 } 
 
 Server::~Server() { 
-	//nothing really to do here
+	//nothing really to do here 
 } 
 
 //start/stop
@@ -160,7 +160,7 @@ bool Server::CreateSocket() {
 bool Server::BindSocket() {
 	//attempt to bind the socket
 	//return false if failed
-	cout << "\n  [Attempting to bind socket...]";
+	cout << "\n  [Attempting to bind socket...]"; 
 	try {
 		SetServerSockAddr();
 		//bind

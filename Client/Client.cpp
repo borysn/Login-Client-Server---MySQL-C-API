@@ -4,7 +4,7 @@
 //this is the only function (besides con/desctructor) that
 //can be called outside of this class file
 void Client::Run() {
-	try {
+	try { 
 		//base menu level
 		menuLevel = 0; 
 		//menu = -1 here is an exit code
@@ -225,7 +225,6 @@ void Client::printMenu() {
 	case 2:
 		if (loggedIn) {
 			cout << "\n====Logged In user menu====\n";
-			cout << "2 : Go back to menu 2.\n";
 			cout << "k : Begin message encryption.\n";
 			cout << "e : Begin echo message.\n";
 			cout << "v : Delete a user.\n"; 
@@ -235,7 +234,6 @@ void Client::printMenu() {
 			cout << "---------------------\n";
 		} else {
 			cout << "\n====Send Message Menu====\n";
-			cout << "1 : Go back to menu 1.\n";
 			cout << "r : Prompt to register a user.\n";
 			cout << "l : Prompt for login.\n";
 			cout << "-1: Send disconnect.\n";

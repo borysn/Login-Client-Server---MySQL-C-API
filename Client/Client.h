@@ -3,13 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include <WinSock2.h>
+#include <WinSock2.h> 
 #include <Windows.h>
 #include "Exception.h"
 
 using namespace std;
 
-#define WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN //arggh
 #define SIZE 64
 
 typedef unsigned long IPNumber; 

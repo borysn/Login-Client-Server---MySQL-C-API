@@ -1,10 +1,8 @@
 #include "Server.h"
 
 //con/destructors 
-Server::Server(int portNum) : REQ_WINSOCK_VER(2), 
-							  PORT(portNum), 
-							  SERVER_NAME("localhost") {
-	UsersMan = new UsersManager();
+Server::Server(int portNum) : REQ_WINSOCK_VER(2), PORT(portNum), SERVER_NAME("localhost") {
+	UsersMan = new UsersManager(); 
 	started = false; 
 	menuLevel = 0; 
 } 
@@ -381,7 +379,8 @@ int Server::processMenu() {
 				HandleConnection(); 
 				//after it's closed we clean up winsock, and re init it
 				//then recreate socket, and rebind it
-				cout << "\n  [Connection handling finished...]\n"; 
+				cout << "\n  [Connection handling finished...]\n";
+				//cleanup, reinit, re-listen
 				CleanUpWinSock(); 
 				InitWinSock();
 				CreateSocket();
@@ -419,7 +418,7 @@ int Server::processMessage(char *pMessage) {
 	try {		
 		char name[SIZE] = "\0"; //64
 		char pwd[SIZE] = "\0";  //64
-		char other[SIZE] = "\0"; //128
+		char other[SIZE*2] = "\0"; //128
 
 		cout << "\n  [Processing message...]\n";
 		//if exit code
@@ -587,7 +586,7 @@ int Server::processMessage(char *pMessage) {
 			//get other
 			delete [] message;
 			message = getMessage();
-			strcpy_s(other, SIZE, message);
+			strcpy_s(other, SIZE*2, message);
 
 			//verify
 			if ((strcmp(other, "\0") == 0)) 

@@ -130,7 +130,8 @@ bool UsersManager::editExistingUser(UserEntry *pOldUser, UserEntry *pNewUser) {
 
 	try {
 		cout << "\n\tediting user...\n";
-		if (userExists(pOldUser->getKey().getUserName())) {
+		if (userExists(pOldUser->getKey().getUserName()) &&
+			!userExists(pNewUser->getKey().getUserName())) {
 			//start swap process
 		} else
 			throw Exception("\tEditing user failed.\n"); 

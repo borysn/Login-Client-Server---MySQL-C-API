@@ -19,9 +19,9 @@ void Client::Run() {
 	}
 }
 
-Client::Client(int portNum, const char *pServerName) : REQ_WINSOCK_VER(2),
-												       SERVER_PORT(portNum),
-												       SERVER_NAME(pServerName) {
+Client::Client(int portNum, const char *pServerName) : REQ_WINSOCK_VER(2), 
+	                                                   SERVER_PORT(portNum), 
+													   SERVER_NAME(pServerName) {
 	connected = false;
 	loggedIn = false; 
 	mSocket = INVALID_SOCKET; 
@@ -226,7 +226,7 @@ void Client::printMenu() {
 		//can't back out of this menu right now...
 		//is that a problem? seems like it should be definitive
 		//to send message after pressing m
-		if (loggedIn) {
+		if (loggedIn) { 
 			cout << "\n====Logged In user menu====\n";
 			cout << "k : Begin message encryption.\n";
 			cout << "e : Begin echo message.\n";

@@ -29,8 +29,6 @@ Instructions...
 	**REMBER TO INCLUDE YOUR LOGIN INFO FOR THE MYSQL DB IN UsersManager.cpp
 	**REMEBER TO EDIT SERVER NAME IN Server.cpp IF YOU NEED THAT CHANGED
 	*
-	I compiled for 32bit Windows Vista. Your structures may change slightly
-	a different operating system.
 4) Run Server!
 	1. give it port number (same one to be used by Client!)
 	2. start server (s), make it wait for a connection(w)

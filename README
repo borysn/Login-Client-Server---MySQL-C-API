@@ -9,11 +9,13 @@
 		
 =====================================
 	
-Pre-Requisites!
+Pre-Requisites! 
 1) MySQL Server installed and running
      !use supplied SQL to build Login.users DB and table
-	 !IF YOU DO NOT HAVE THE DB AND TABLE SETUP CORRECTLY THE PROGRAM WILL FAIL! OBVS 
-	 !IF YOU DO NOT HAVE MYSQL SERVER UP AND RUNNING THE PROGRAM WILL EXIT REALLY QUICKLY! OBVS  
+	 !IF YOU DO NOT HAVE THE DB AND TABLE SETUP CORRECTLY 
+	  THE PROGRAM WILL FAIL! OBVS 
+	 !IF YOU DO NOT HAVE MYSQL SERVER UP AND RUNNING 
+	  THE PROGRAM WILL EXIT REALLY QUICKLY! OBVS 
 2) Visual C++ and or equivelant libraries to handle winsock
    exchanges. I am using Windows Visual Studio C++ Express 2010 on a 32bit Windows Vista Machine. 
    Centrino2... oh yea. Beefin up. w/e. It works. 

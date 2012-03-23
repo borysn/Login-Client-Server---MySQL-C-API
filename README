@@ -17,7 +17,11 @@ Pre-Requisites!
 	 !IF YOU DO NOT HAVE MYSQL SERVER UP AND RUNNING 
 	  THE PROGRAM WILL EXIT REALLY QUICKLY! OBVS 
 2) Visual C++ and or equivelant libraries to handle winsock
+<<<<<<< HEAD
    exchanges. I am using Windows Visual Studio C++ Express 2010 on a 64bit Windows Vista Machine. 
+=======
+   exchanges. I am using Windows Visual Studio C++ Express 2010 on a 32bit Windows Vista Machine. 
+>>>>>>> 2378df36d62b8fe664c39ab42bbeeba6dbee4f59
    Centrino2... oh yea. Beefin up. w/e. It works. 
    
 Instructions...

@@ -16,8 +16,8 @@ Pre-Requisites!
 	  THE PROGRAM WILL FAIL! OBVS 
 	 !IF YOU DO NOT HAVE MYSQL SERVER UP AND RUNNING 
 	  THE PROGRAM WILL EXIT REALLY QUICKLY! OBVS 
-2) Visual C++ and or equivelant libraries to handle winsock exchanges. 
-   I am using Windows Visual Studio C++ Express 2010 on a 64bit Windows Vista Machine. 
+2) Visual C++ and or equivelant libraries to handle winsock exchanges. I am using 
+   Windows Visual Studio C++ Express 2010 on a 64bit Windows Vista Machine. 
 
    
 Instructions...

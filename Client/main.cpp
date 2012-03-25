@@ -5,7 +5,7 @@ int main() {
 	int portNum;
 
 	cout << "Creating a client object...\nEnter server name: ";
-	getline(cin, server);
+	getline(cin, server); 
 	cout << "Enter port #: ";
 	cin >> portNum;
 

@@ -6,6 +6,7 @@
 #include <WinSock2.h> 
 #include <Windows.h>
 #include "Exception.h"
+#include "UserEntry.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ private:
 	sockaddr_in sockAddr; 
 	SOCKET mSocket;
 	WSAData wsaData;
+	UserKey *user; 
 
 	//private functions...
 	//setup

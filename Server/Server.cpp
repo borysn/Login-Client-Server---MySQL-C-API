@@ -12,7 +12,7 @@ Server::~Server() {
 } 
 
 //start/stop
-//these will handle the server specific menu
+//these will handle the server specific menu 
 //and options
 void Server::Run() {
 	while (menuLevel != -1) {
@@ -653,8 +653,12 @@ int Server::processMessage(char *pMessage) {
 					throw Exception("\nError sending request...\n");
 				} else {
 					if (UsersMan->removeUser(pKey)) { 
-						if ((sendMessage("user removed...\n", false)) == false) 
-							throw Exception("\nError sending request...\n"); 
+						strcpy_s(message, SIZE, "user ");
+						strcat_s(message, SIZE, pKey->getKey().getUserName());
+						strcat_s(message, SIZE, " removed...\n");
+						if ((sendMessage(message, false)) == false) 
+							throw Exception("\nError sending request...\n");
+						delete [] message;
 					} else {
 						if ((sendMessage("user removal failed...\n", false)) == false) 
 							throw Exception("\nError sending request...\n");

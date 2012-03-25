@@ -24,6 +24,7 @@ Client::Client(int portNum, const char *pServerName) : REQ_WINSOCK_VER(2),
 													   SERVER_NAME(pServerName) {
 	connected = false;
 	loggedIn = false; 
+	user = NULL; //point to nada
 	mSocket = INVALID_SOCKET; 
 }
 
@@ -231,7 +232,7 @@ void Client::printMenu() {
 			cout << "k : Begin message encryption.\n";
 			cout << "e : Begin echo message.\n";
 			cout << "v : Delete a user.\n"; 
-			cout << "f : Find a user.\n";
+			cout << "f : Find a user.\n"; 
 			cout << "o : logout.\n"; 
 			cout << "-1: Send disconnect.\n";
 			cout << "---------------------\n";
@@ -415,9 +416,11 @@ bool Client::processResponse(char *pResponse) {
 			//get and send password
 			getServerResponse();
 			cout << "Password:> ";
-			cin >> pwd;
+			cin >> pwd; 
 			if (send(mSocket, pwd, SIZE, 0) == SOCKET_ERROR)
 				throw Exception("\nFailed to send password...\n");
+
+			user = new UserKey(name, pwd); 
 
 			//get success or not
 			//if success loggedIn = true
@@ -434,6 +437,7 @@ bool Client::processResponse(char *pResponse) {
 		//if logging out 
 		else if ((strcmp(pResponse, "o") == 0) && loggedIn) {
 			cout << "\n  Logging user out...\n";
+			delete [] user; 
 			loggedIn = false;
 			menuLevel = 1;
 		}
@@ -524,8 +528,13 @@ bool Client::processResponse(char *pResponse) {
 
 			//add y/n final decision here. 
 
-			//get removal seuccess or not
-			getServerResponse(); 
+			//get removal seuccess or not 
+			
+			//if a user deletes him/her..self then log the user out!
+			string response = string(getServerResponse()); 
+			if(response.find(user->getUserName()) != string::npos) { 
+				processResponse("o");
+			} 
 
 			menuLevel = 1;
 		}

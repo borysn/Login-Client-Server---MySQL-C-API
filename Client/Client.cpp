@@ -228,7 +228,7 @@ void Client::printMenu() {
 		//is that a problem? seems like it should be definitive
 		//to send message after pressing m
 		if (loggedIn) { 
-			cout << "\n====Logged In user menu====\n";
+			cout << "\n====Logged in menu: " << user->getUserName() << "====\n";
 			cout << "k : Begin message encryption.\n";
 			cout << "e : Begin echo message.\n";
 			cout << "v : Delete a user.\n"; 
@@ -529,11 +529,10 @@ bool Client::processResponse(char *pResponse) {
 			//add y/n final decision here. 
 
 			//get removal seuccess or not 
-			
 			//if a user deletes him/her..self then log the user out!
 			string response = string(getServerResponse()); 
 			if(response.find(user->getUserName()) != string::npos) { 
-				processResponse("o");
+				processResponse("o"); 
 			} 
 
 			menuLevel = 1;

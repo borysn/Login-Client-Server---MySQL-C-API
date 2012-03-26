@@ -12,7 +12,10 @@ void Client::Run() {
 		while (menuLevel != -1) {
 			//loop application until exit code is recieved 
 			printMenu(); 
-			menuLevel = processMenu(); 
+			menuLevel = processMenu();
+			//if a user is logged in, just pull up the send message menu
+			if (loggedIn) 
+				sendMessage(NULL, true); 
 		} 
 	} catch (Exception &e) {
 		cout << e.hmm();
@@ -234,7 +237,7 @@ void Client::printMenu() {
 			cout << "v : Delete a user.\n"; 
 			cout << "f : Find a user.\n"; 
 			cout << "o : logout.\n"; 
-			cout << "-1: Send disconnect.\n";
+			cout << "-1: Send disconnect.\n"; 
 			cout << "---------------------\n";
 		} else {
 			cout << "\n====Send Message Menu====\n";
@@ -428,7 +431,7 @@ bool Client::processResponse(char *pResponse) {
 			//pResponse = getServerResponse();
 			string response = string(getServerResponse());
 			if (response.find("success") != string::npos) {
-				loggedIn = true; 
+				loggedIn = true;
 			} 
 			
 			menuLevel = 1;

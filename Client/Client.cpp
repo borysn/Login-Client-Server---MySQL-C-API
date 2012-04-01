@@ -298,8 +298,8 @@ int Client::processMenu() {
 	case 'm':
 		try {
 			cout << "\nBringing up Send Message menu...\n";
-			if (sendMessage(NULL, true))
-				cout << "\n  send message menu returned success.\n";
+			if (sendMessage(NULL, true));
+				//cout << "\n  send message menu returned success.\n";
 			else 
 				throw Exception("\nError...\n");
 		} catch (Exception &e) {

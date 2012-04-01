@@ -646,15 +646,16 @@ int Server::processMessage(char *pMessage) {
 
 			delete [] message;
 
-			UserEntry *pKey = new UserEntry(new UserKey(name, pwd));
+			UserKey *pKey = new UserKey(name, pwd);
+			UserEntry *pUser = new UserEntry(pKey);
 
-			if (UsersMan->login(pKey)) {
+			if (UsersMan->login(pUser)) {
 				if ((sendMessage("login success...\n\tdeleting user...\n", false)) == false) {
 					throw Exception("\nError sending request...\n");
 				} else {
-					if (UsersMan->removeUser(pKey)) { 
+					if (UsersMan->removeUser(pUser)) { 
 						strcpy_s(message, SIZE, "user ");
-						strcat_s(message, SIZE, pKey->getKey().getUserName());
+						strcat_s(message, SIZE, pUser->getKey().getUserName());
 						strcat_s(message, SIZE, " removed...\n");
 						if ((sendMessage(message, false)) == false) 
 							throw Exception("\nError sending request...\n");
@@ -672,7 +673,8 @@ int Server::processMessage(char *pMessage) {
 					throw Exception("\nError sending request...\n");
 			}
 
-			delete pKey;
+			delete pUser;
+
 			return 1;
 		}
 		// for everything else disconnect
